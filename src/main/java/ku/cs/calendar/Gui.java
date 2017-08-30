@@ -46,7 +46,7 @@ public class Gui {
 		}
 	}
 	
-	private void initialize(ArrayList dataBase) {
+	private void initialize(final ArrayList dataBase) {
 		frame = new JFrame("Calendar");
 		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,6 +55,9 @@ public class Gui {
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		final JList list = new JList(Script.changeArrayToList(dataBase));
+		frame.getContentPane().add(list, BorderLayout.CENTER);
 		
 		JLabel lblDate = new JLabel("Date");
 		panel.add(lblDate);
@@ -84,16 +87,16 @@ public class Gui {
 		    	String time = timeField.getText();
 		    	String note = noteField.getText();
 		    	
-		    	
+		    	String data = date + " : " + time + " : " + note;
+		    	dataBase.add(data);
+		    	System.out.println(dataBase);
+		    	frame.repaint();
 		    }
 		});
 		panel.add(btnAdd);
 		
 		JLabel lblDate_1 = new JLabel("Date");
 		frame.getContentPane().add(lblDate_1, BorderLayout.NORTH);
-		
-		JList list = new JList(Script.changeArrayToList(dataBase));
-		frame.getContentPane().add(list, BorderLayout.CENTER);
 	}
 
 }
