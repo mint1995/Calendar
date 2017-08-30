@@ -6,13 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
-
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import java.awt.FlowLayout;
-import java.awt.List;
 import java.util.ArrayList;
 
 public class Gui {
@@ -21,6 +18,7 @@ public class Gui {
 	private JTextField dateField;
 	private JTextField timeField;
 	private JTextField noteField;
+	JList list;
 
 	/**
 	 * Launch the application.
@@ -56,7 +54,7 @@ public class Gui {
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		final JList list = new JList(Script.changeArrayToList(dataBase));
+		list = new JList(Script.changeArrayToList(dataBase));
 		frame.getContentPane().add(list, BorderLayout.CENTER);
 		
 		JLabel lblDate = new JLabel("Date");
@@ -90,7 +88,13 @@ public class Gui {
 		    	String data = date + " : " + time + " : " + note;
 		    	dataBase.add(data);
 		    	System.out.println(dataBase);
-		    	frame.repaint();
+		    	list = new JList(Script.changeArrayToList(dataBase));
+		    	frame.getContentPane().add(list, BorderLayout.CENTER);
+		    	frame.revalidate();
+		    	
+		    	dateField.setText("");
+		    	timeField.setText("");
+		    	noteField.setText("");
 		    }
 		});
 		panel.add(btnAdd);
