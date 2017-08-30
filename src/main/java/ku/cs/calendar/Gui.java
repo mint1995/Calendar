@@ -4,22 +4,23 @@ package ku.cs.calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
-import java.awt.Insets;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JList;
 import java.awt.FlowLayout;
+import java.awt.List;
+import java.util.ArrayList;
 
 public class Gui {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField dateField;
+	private JTextField timeField;
+	private JTextField noteField;
 
 	/**
 	 * Launch the application.
@@ -28,24 +29,24 @@ public class Gui {
 	/**
 	 * Create the application.
 	 */
-	public Gui() {
-		initialize();
+	public Gui(ArrayList dataBase) {
+		initialize(dataBase);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	
-	public void run() {
+	public void run(ArrayList dataBase) {
 		try {
-			Gui window = new Gui();
+			Gui window = new Gui(dataBase);
 			window.frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void initialize() {
+	private void initialize(ArrayList dataBase) {
 		frame = new JFrame("Calendar");
 		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,31 +59,40 @@ public class Gui {
 		JLabel lblDate = new JLabel("Date");
 		panel.add(lblDate);
 		
-		textField = new JTextField();
-		panel.add(textField);
-		textField.setColumns(10);
+		dateField = new JTextField();
+		panel.add(dateField);
+		dateField.setColumns(10);
 		
 		JLabel lblTime = new JLabel("Time");
 		panel.add(lblTime);
 		
-		textField_1 = new JTextField();
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		timeField = new JTextField();
+		panel.add(timeField);
+		timeField.setColumns(10);
 		
 		JLabel lblNote = new JLabel("Note");
 		panel.add(lblNote);
 		
-		textField_2 = new JTextField();
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		noteField = new JTextField();
+		panel.add(noteField);
+		noteField.setColumns(10);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new java.awt.event.ActionListener() {
+		    public void actionPerformed(java.awt.event.ActionEvent evt) {
+		    	String date = dateField.getText();
+		    	String time = timeField.getText();
+		    	String note = noteField.getText();
+		    	
+		    	
+		    }
+		});
 		panel.add(btnAdd);
 		
 		JLabel lblDate_1 = new JLabel("Date");
 		frame.getContentPane().add(lblDate_1, BorderLayout.NORTH);
 		
-		JList list = new JList();
+		JList list = new JList(Script.changeArrayToList(dataBase));
 		frame.getContentPane().add(list, BorderLayout.CENTER);
 	}
 
