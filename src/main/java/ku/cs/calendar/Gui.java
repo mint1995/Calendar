@@ -6,10 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import javax.swing.JLabel;
+import java.awt.Insets;
+import javax.swing.JTextField;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.JList;
+import java.awt.FlowLayout;
 
 public class Gui {
 
 	private JFrame frame;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -36,22 +46,44 @@ public class Gui {
 	}
 	
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame = new JFrame("Calendar");
+		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{178, 77, 0};
-		gridBagLayout.rowHeights = new int[]{23, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		frame.getContentPane().setLayout(gridBagLayout);
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JButton btnAddDate = new JButton("Add Date");
-		GridBagConstraints gbc_btnAddDate = new GridBagConstraints();
-		gbc_btnAddDate.anchor = GridBagConstraints.NORTHWEST;
-		gbc_btnAddDate.gridx = 1;
-		gbc_btnAddDate.gridy = 7;
-		frame.getContentPane().add(btnAddDate, gbc_btnAddDate);
+		JPanel panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblDate = new JLabel("Date");
+		panel.add(lblDate);
+		
+		textField = new JTextField();
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblTime = new JLabel("Time");
+		panel.add(lblTime);
+		
+		textField_1 = new JTextField();
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNote = new JLabel("Note");
+		panel.add(lblNote);
+		
+		textField_2 = new JTextField();
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnAdd = new JButton("Add");
+		panel.add(btnAdd);
+		
+		JLabel lblDate_1 = new JLabel("Date");
+		frame.getContentPane().add(lblDate_1, BorderLayout.NORTH);
+		
+		JList list = new JList();
+		frame.getContentPane().add(list, BorderLayout.CENTER);
 	}
 
 }
