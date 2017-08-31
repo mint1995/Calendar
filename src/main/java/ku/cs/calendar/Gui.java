@@ -163,6 +163,7 @@ public class Gui {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if(monthBox.getSelectedIndex()==1){
+					
 					panel.remove(lblDate);
 					panel.remove(dateBox);
 					panel.remove(monthBox);
@@ -175,6 +176,7 @@ public class Gui {
 					panel.remove(btnAdd);
 					
 					String[] date = new String[28];
+					
 					for(int i=0;i<28;i++){
 						if(i<9){
 							date[i] = "0"+(i+1);
@@ -185,6 +187,7 @@ public class Gui {
 					}
 					
 					dateBox = new JComboBox(date);
+					
 					panel.add(lblDate);
 					panel.add(dateBox);
 					panel.add(monthBox);
@@ -196,6 +199,43 @@ public class Gui {
 					panel.add(noteField);
 					panel.add(btnAdd);
 					panel.revalidate();
+				}
+				else{						
+						panel.remove(lblDate);
+						panel.remove(dateBox);
+						panel.remove(monthBox);
+						panel.remove(yearBox);
+						panel.remove(lblTime);
+						panel.remove(hourBox);
+						panel.remove(minuteBox);
+						panel.remove(lblNote);
+						panel.remove(noteField);
+						panel.remove(btnAdd);
+						
+						String[] date = new String[30];
+						
+						for(int i=0;i<30;i++){
+							if(i<9){
+								date[i] = "0"+(i+1);
+							}
+							else{
+								date[i] = (i+1)+"";
+							}
+						}
+						
+						dateBox = new JComboBox(date);
+						
+						panel.add(lblDate);
+						panel.add(dateBox);
+						panel.add(monthBox);
+						panel.add(yearBox);
+						panel.add(lblTime);
+						panel.add(hourBox);
+						panel.add(minuteBox);
+						panel.add(lblNote);
+						panel.add(noteField);
+						panel.add(btnAdd);
+						panel.revalidate();
 				}
 			}
 			
