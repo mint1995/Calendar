@@ -2,13 +2,26 @@ package ku.cs.calendar;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class CalendarTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void ScrpitTest() {
+		ArrayList data = new ArrayList();
+		data.add("test");
+		Assert.assertEquals(Script.changeArrayToList(data)[0], "test");
 	}
+	
+	@Test
+	public void addDataTest(){
+		virtualDB.addData("test");
+		Assert.assertEquals(virtualDB.getData().get(0), "test");
+	}
+	
 
 }

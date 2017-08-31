@@ -7,10 +7,11 @@ public class virtualDB {
 	
 	public static void addData(String data){
 		dataBase.add(data);
-		System.out.println("successful adding data");
+		//System.out.println("success");
 	}
 	
 	public static ArrayList getData(){
 		return dataBase;
+		
 	}
 }
