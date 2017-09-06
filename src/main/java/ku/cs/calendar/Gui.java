@@ -22,9 +22,11 @@ public class Gui {
 
 	private JFrame frame;
 	private JTextField noteField;
-	JList list;
-	JComboBox dateBox;
-	DBConnecter dataBase = new DBConnecter();
+	private JList list;
+	private JComboBox dateBox;
+	private DBConnecter dataBase = new DBConnecter();
+	//check is Feb is selected
+	private int checkFeb = 0;
 
 	/**
 	 * Launch the application.
@@ -183,7 +185,7 @@ public class Gui {
 		});
 		panel.add(btnAdd);
 		
-		JButton btnDelete = new JButton("Delete");
+		final JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new java.awt.event.ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -207,14 +209,23 @@ public class Gui {
 				}
 				
 				//refresh window
+				dataBase.connect();
+				String[] data = null;
 				try {
-		    		dataBase.connect();
-					list = new JList(Script.changeArrayToList(dataBase.getData()));
+					if(dataBase.getData().isEmpty()){
+						data = new String[1];
+						data[0] = "no data";
+					}
+					else{
+						dataBase.connect();
+						data = Script.changeArrayToList(dataBase.getData());
+					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
+				list = new JList(data);
 				frame.getContentPane().add(list, BorderLayout.CENTER);
 		    	frame.revalidate();
 		    	
@@ -230,8 +241,10 @@ public class Gui {
 
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(monthBox.getSelectedIndex()==1){
-					
+				
+				//selected other month and going to select Feb
+				if(monthBox.getSelectedIndex()==1 && checkFeb==0){
+					checkFeb=1;
 					panel.remove(lblDate);
 					panel.remove(dateBox);
 					panel.remove(monthBox);
@@ -242,6 +255,7 @@ public class Gui {
 					panel.remove(lblNote);
 					panel.remove(noteField);
 					panel.remove(btnAdd);
+					panel.remove(btnDelete);
 					
 					String[] date = new String[28];
 					
@@ -266,44 +280,49 @@ public class Gui {
 					panel.add(lblNote);
 					panel.add(noteField);
 					panel.add(btnAdd);
+					panel.add(btnDelete);
 					panel.revalidate();
 				}
-				else{						
-						panel.remove(lblDate);
-						panel.remove(dateBox);
-						panel.remove(monthBox);
-						panel.remove(yearBox);
-						panel.remove(lblTime);
-						panel.remove(hourBox);
-						panel.remove(minuteBox);
-						panel.remove(lblNote);
-						panel.remove(noteField);
-						panel.remove(btnAdd);
+				//selected Feb and going to select other month
+				else if(monthBox.getSelectedIndex()!=1 && checkFeb==1){
+					checkFeb=0;
+					panel.remove(lblDate);
+					panel.remove(dateBox);
+					panel.remove(monthBox);
+					panel.remove(yearBox);
+					panel.remove(lblTime);
+					panel.remove(hourBox);
+					panel.remove(minuteBox);
+					panel.remove(lblNote);
+					panel.remove(noteField);
+					panel.remove(btnAdd);
+					panel.remove(btnDelete);
 						
-						String[] date = new String[30];
-						
-						for(int i=0;i<30;i++){
-							if(i<9){
-								date[i] = "0"+(i+1);
-							}
-							else{
-								date[i] = (i+1)+"";
-							}
+					String[] date = new String[30];
+					
+					for(int i=0;i<30;i++){
+						if(i<9){
+							date[i] = "0"+(i+1);
 						}
+						else{
+							date[i] = (i+1)+"";
+						}
+					}
 						
-						dateBox = new JComboBox(date);
+					dateBox = new JComboBox(date);
 						
-						panel.add(lblDate);
-						panel.add(dateBox);
-						panel.add(monthBox);
-						panel.add(yearBox);
-						panel.add(lblTime);
-						panel.add(hourBox);
-						panel.add(minuteBox);
-						panel.add(lblNote);
-						panel.add(noteField);
-						panel.add(btnAdd);
-						panel.revalidate();
+					panel.add(lblDate);
+					panel.add(dateBox);
+					panel.add(monthBox);
+					panel.add(yearBox);
+					panel.add(lblTime);
+					panel.add(hourBox);
+					panel.add(minuteBox);
+					panel.add(lblNote);
+					panel.add(noteField);
+					panel.add(btnAdd);
+					panel.add(btnDelete);
+					panel.revalidate();
 				}
 			}
 			
