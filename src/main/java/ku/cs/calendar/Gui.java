@@ -1,5 +1,5 @@
 package ku.cs.calendar;
-
+//Poramain Keawpan 5710404446 
 
 
 import javax.swing.JFrame;
@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import java.awt.CardLayout;
+import javax.swing.JCheckBox;
+import java.awt.GridLayout;
 
 public class Gui {
 
@@ -51,7 +54,7 @@ public class Gui {
 	
 	private void initialize() throws SQLException {
 		frame = new JFrame("Calendar");
-		frame.setBounds(100, 100, 550, 300);
+		frame.setBounds(100, 100, 650, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -66,6 +69,7 @@ public class Gui {
 			data[0] = "no data";
 		}
 		else{
+			dataBase.connect();
 			data = Script.changeArrayToList(dataBase.getData());
 		}
 		list = new JList(data);
@@ -160,6 +164,8 @@ public class Gui {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		    	
+		    	//refresh window
 		    	try {
 		    		dataBase.connect();
 					list = new JList(Script.changeArrayToList(dataBase.getData()));
@@ -167,15 +173,58 @@ public class Gui {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		    	
 		    	frame.getContentPane().add(list, BorderLayout.CENTER);
 		    	frame.revalidate();
 		    	
-
-
+		    	//reset input field
 		    	noteField.setText("");
 		    }
 		});
 		panel.add(btnAdd);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new java.awt.event.ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				String day = (String) dateBox.getSelectedItem();
+		    	String month = (String) monthBox.getSelectedItem();
+		    	String year = (String) yearBox.getSelectedItem();
+		    	String hour = (String) hourBox.getSelectedItem();
+		    	String minute = (String) minuteBox.getSelectedItem();
+		    	String note = noteField.getText();
+		    	
+		    	String date = day+"/"+month+"/"+year; 
+		    	String time = hour+"."+minute;
+		    	
+		    	dataBase.connect();
+				try {
+					dataBase.delete(date, time, note);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				//refresh window
+				try {
+		    		dataBase.connect();
+					list = new JList(Script.changeArrayToList(dataBase.getData()));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				frame.getContentPane().add(list, BorderLayout.CENTER);
+		    	frame.revalidate();
+		    	
+		    	//reset input field
+		    	noteField.setText("");
+			}
+			
+			
+		});
+		panel.add(btnDelete);
 		
 		monthBox.addActionListener(new java.awt.event.ActionListener() {
 
