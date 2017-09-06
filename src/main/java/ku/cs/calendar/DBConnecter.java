@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
  
 /**
  * This program demonstrates making JDBC connection to a SQLite database.
@@ -29,21 +30,24 @@ public class DBConnecter {
         }
 	}
  
-    public void getData() throws SQLException {
+    public ArrayList<String> getData() throws SQLException {
     	 String query = "Select * from carlendarData";
          java.sql.Statement statement = conn.createStatement();
          ResultSet resultSet = statement.executeQuery(query);
+         ArrayList output = new ArrayList();
          
          while (resultSet.next()) {
          	String date = resultSet.getString(1);
          	String time = resultSet.getString(2);
          	String note = resultSet.getString(3);
 
-         	System.out.println("Date:"+date+" Time:"+time+" Note: "+note);
+         	output.add(date+" : "+time+" : "+note);
          }
          
          // close connection
          conn.close();
+         
+         return output;
     }
     
     public void addData(String date,String time,String note) throws SQLException{

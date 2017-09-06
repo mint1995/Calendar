@@ -7,11 +7,9 @@ public class RunApp {
 
 	public static void main(String[] args) throws SQLException {
 		// TODO Auto-generated method stub
-//		Gui gui = new Gui();
-//		gui.run();
-		DBConnecter db = new DBConnecter();
-		db.connect();
-		db.getData();
+		Gui gui = new Gui();
+		gui.run();
+
 	}
 
 }

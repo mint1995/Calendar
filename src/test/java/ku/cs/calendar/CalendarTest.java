@@ -19,8 +19,7 @@ public class CalendarTest {
 	
 	@Test
 	public void addDataTest(){
-		virtualDB.addData("test");
-		Assert.assertEquals(virtualDB.getData().get(0), "test");
+		
 	}
 	
 

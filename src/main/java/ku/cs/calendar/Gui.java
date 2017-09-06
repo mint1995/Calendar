@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JList;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 
@@ -20,6 +21,7 @@ public class Gui {
 	private JTextField noteField;
 	JList list;
 	JComboBox dateBox;
+	DBConnecter dataBase = new DBConnecter();
 
 	/**
 	 * Launch the application.
@@ -27,8 +29,10 @@ public class Gui {
 
 	/**
 	 * Create the application.
+	 * @throws SQLException 
 	 */
-	public Gui() {
+	public Gui() throws SQLException {
+		dataBase.connect();
 		initialize();
 	}
 
@@ -45,7 +49,7 @@ public class Gui {
 		}
 	}
 	
-	private void initialize() {
+	private void initialize() throws SQLException {
 		frame = new JFrame("Calendar");
 		frame.setBounds(100, 100, 550, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,13 +59,14 @@ public class Gui {
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		dataBase.connect();
 		String[] data = null;
-		if(virtualDB.getData() != null){
+		if(dataBase.getData().isEmpty()){
 			data = new String[1];
 			data[0] = "no data";
 		}
 		else{
-			data = Script.changeArrayToList(virtualDB.getData());
+			data = Script.changeArrayToList(dataBase.getData());
 		}
 		list = new JList(data);
 		frame.getContentPane().add(list, BorderLayout.CENTER);
@@ -145,9 +150,23 @@ public class Gui {
 		    	String minute = (String) minuteBox.getSelectedItem();
 		    	String note = noteField.getText();
 		    	
-		    	String data = day+"/"+month+"/"+year+" : " + hour+"."+minute + " : " + note;
-		    	virtualDB.addData(data);;
-		    	list = new JList(Script.changeArrayToList(virtualDB.getData()));
+		    	String date = day+"/"+month+"/"+year; 
+		    	String time = hour+"."+minute;
+		    	
+		    	try {
+		    		dataBase.connect();
+					dataBase.addData(date, time, note);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	try {
+		    		dataBase.connect();
+					list = new JList(Script.changeArrayToList(dataBase.getData()));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    	frame.getContentPane().add(list, BorderLayout.CENTER);
 		    	frame.revalidate();
 		    	
