@@ -59,8 +59,11 @@ public class Gui {
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		DatePicker dp  = new DatePicker();
+//		dataBase.connect();
+//		dp.addMark(dataBase.getData());
 		final JPanel panel = new JPanel();
 		panel.add(dp);
+		
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
 		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));

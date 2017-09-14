@@ -21,7 +21,7 @@ public class DBConnecter {
 	public void connect(){
 		try {
             Class.forName("org.sqlite.JDBC");
-            String dbURL = "jdbc:sqlite:carlendar.db";
+            String dbURL = "jdbc:sqlite:newDB.db";
             conn = DriverManager.getConnection(dbURL);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -31,17 +31,18 @@ public class DBConnecter {
 	}
  
     public ArrayList<String> getData() throws SQLException {
-    	 String query = "Select * from carlendarData";
+    	 String query = "Select * from date_table";
          java.sql.Statement statement = conn.createStatement();
          ResultSet resultSet = statement.executeQuery(query);
          ArrayList output = new ArrayList();
          
          while (resultSet.next()) {
-         	String date = resultSet.getString(1);
-         	String time = resultSet.getString(2);
-         	String note = resultSet.getString(3);
+        	String year = resultSet.getString(1);
+        	String month = resultSet.getString(2);
+        	String date = resultSet.getString(3);
+         	String note = resultSet.getString(4);
 
-         	output.add(date+" : "+time+" : "+note);
+         	output.add(date+"/"+month+"/"+year+"-"+note);
          }
          
          // close connection

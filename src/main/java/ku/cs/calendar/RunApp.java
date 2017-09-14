@@ -9,7 +9,9 @@ public class RunApp {
 		// TODO Auto-generated method stub
 		Gui gui = new Gui();
 		gui.run();
-
+//		DBConnecter db = new DBConnecter();
+//		db.connect();
+//		System.out.println(db.getData());
 	}
 
 }
